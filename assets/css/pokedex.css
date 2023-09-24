@@ -87,7 +87,7 @@
 }
 
 .pokemon:hover{
-    box-shadow: 4px 8px 16px 0 rgba(0, 0, 0, 0.911);
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.911);
 }
 
 .pokemon .number{
@@ -149,6 +149,7 @@
     border: none;
     border-radius: 1rem;
 }
+
 .pagination button:hover {
     cursor: pointer;
 }

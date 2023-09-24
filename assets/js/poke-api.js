@@ -1,5 +1,7 @@
 const pokeApi = {}
 
+// Card pequeno (li)
+// Função que transforma o id, nome, tipos e imagem do pokémon recebidos da PokéAPI para a nomenclatura utilizada no projeto
 function convertPokeApiDetailToPokemon(pokemonDetails){
     const pokemon = new Pokemon()
     pokemon.number = pokemonDetails.id
@@ -17,6 +19,8 @@ function convertPokeApiDetailToPokemon(pokemonDetails){
     return pokemon;
 }
 
+// Card com os status (modal)
+// Função que transforma o nome, id, tipos e status do pokémon da PokéAPI para a nomenclatura utilizada no projeto
 function convertPokemonByIdToPokemon(pokemonDetails) {
     const pokemon = new Pokemon();
     pokemon.name = pokemonDetails.name;
@@ -42,12 +46,14 @@ function convertPokemonByIdToPokemon(pokemonDetails) {
     return pokemon;
 }
 
+// Função que obtém os status da PokéAPI, transforma para JSON para depois serem utilizados na função que tranforma para a nomeclatura utilizada no projeto
 pokeApi.getPokemonDetails = (pokemon) => {
     return fetch(pokemon.url)
     .then((response) => response.json())
     .then(convertPokeApiDetailToPokemon)
 }
 
+// Função que obtém a lista de pokémon da PokéAPI, transforma a resposta em JSON, depois seleciona quais status pegar, mapeia a lista e retorna uma promessa que resolve com a lista de detalhes dos Pokémon
 pokeApi.getPokemonLista = (offset = 0, limit = 5) => {
 const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`;
 
@@ -58,6 +64,8 @@ return fetch(url)
 .then ((detailRequests) => Promise.all(detailRequests))
 .then ((pokemonDetails) => pokemonDetails)
 }
+
+// Função que obtém o pokémon da PokéAPI pelo seu id, converte a resposta para JSON, em seguida chama a função convertPokemonByIdToPokemon para converter os detalhes do Pokémon para a nomenclatura utilizada no projeto
 pokeApi.getPokemonById = (id) => {
     const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
 

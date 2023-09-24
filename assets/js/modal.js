@@ -1,66 +1,64 @@
-let customAlert = new CustomAlert();
+let modalAlert = new ModalAlert();
 
-function CustomAlert() {
+//Função modal para carregar os status do pokémon clicado
+function ModalAlert() {
   this.alert = function (message) {
     document.body.innerHTML =
       document.body.innerHTML +
-      `<div id="dialogoverlay"></div>
-        <span id="wrap"> </span>
+      `<div id="overlay"></div>
+        <span id="modal"> </span>
       `;
 
     let idParam = message;
 
-    function uppercaseFirstLetter(str) {
-      return str[0].toUpperCase() + str.substring(1);
-    }
-
-    function replaceHyphenAndUppercaseFirstLetter(str) {
-      return uppercaseFirstLetter(str).replace("-", " ");
-    }
-
+    // Função para converter pokémon para HTML
     function convertPokemonToHtmlContent(pokemon) {
       return `
-        <section id="pokemonModal" class="modal-content slit-in-vertical ${
-          pokemon.mainType
-        } ">
-        <div id="modalClose">
-          <button class="close" onclick="customAlert.ok()">&#10229;</button>
-        </div>
-        <div class="header">
-        <h1>${uppercaseFirstLetter(pokemon.name)}</h1>
-          <span class="number">#${pokemon.number}</span>
-          <ol class="types">
-            ${pokemon.types
+        <section id="pokemonModal" class="modal-content ${pokemon.mainType} ">
+          <div id="modalClose">
+            <button class="close" onclick="modalAlert.ok()">&#10229;</button>
+          </div>
+          <div class="header">
+            <h1 class="name">${pokemon.name}</h1>
+            <span class="number">#${pokemon.number}</span>
+            <ol class="types">
+              ${pokemon.types
               .map((type) => `<li class="type ${type}">${type}</li>`)
               .join("")}
-          </ol>
-        </div>
-        <div class="container-details">
-              <img class="pokemon-img"
-                 src="${pokemon.photo}"
-                 alt="${pokemon.name}">
-                 <div class="content-details">
-                    <div class="stats">
-                    <span class="title-3">Status Base</span>
-                    ${pokemon.stats.map((stat) => `
-                       <div class="${stat.name}">
-                          <span class="stats-name">${replaceHyphenAndUppercaseFirstLetter(stat.name)}</span>
-                          <span class="stat-number">${stat.number}</span>
-                       </div>
-                    `).join("")}
-                    </div>
+            </ol>
+          </div>
+
+          <div class="container-details">
+            <img class="pokemon-img"
+            src="${pokemon.photo}"
+            alt="${pokemon.name}">
+            <div class="content-details">
+              <div class="stats">
+                <span class="stats-base">Status Base</span>
+                ${pokemon.stats
+                .map(
+                (stat) => `
+                <div class="${stat.name}">
+                  <span class="stat-name">${stat.name}</span>
+                  <span class="stat-number">${stat.number}</span>
                 </div>
-        </div>
+                `
+                )
+                .join("")}
+              </div>
+            </div>
+          </div>
         </section>
       `;
     }
 
-    let dialogoverlay = document.getElementById("dialogoverlay");
-    let pokemonModal = document.getElementById("wrap");
+    // Ajuste da sobreposição do modal na tela 
+    let overlay = document.getElementById("overlay");
+    let pokemonModal = document.getElementById("modal");
     let winH = window.innerHeight;
 
-    dialogoverlay.style.height = winH + "px";
-    dialogoverlay.style.display = "block";
+    overlay.style.height = winH + "px";
+    overlay.style.display = "block";
     pokemonModal.style.display = "block";
 
     pokeApi
@@ -71,10 +69,9 @@ function CustomAlert() {
       .catch((err) => console.error(err));
   };
 
+  // Fecha o Modal Alert e tira o esmaecimento da tela 
   this.ok = function () {
-    document.getElementById("wrap").style.display = "none";
-    document.getElementById("dialogoverlay").style.display = "none";
+    document.getElementById("modal").style.display = "none";
+    document.getElementById("overlay").style.display = "none";
   };
 }
-
-

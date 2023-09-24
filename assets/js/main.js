@@ -1,21 +1,21 @@
-
 const pokemonList = document.getElementById('pokemonList')
 const loadMoreButton = document.getElementById('loadMoreButton')
 
 const maxRecords = 151
 const limit = 10
 let offset = 0;
-    
-    function convertPokemonToLi(pokemon) {
-        return `
+
+// Função para converter os pokémon em lista
+function convertPokemonToLi(pokemon) {
+    return `
         <li class="pokemon ${pokemon.mainType}" 
-        onclick="customAlert.alert(${pokemon.number})">
+        onclick="modalAlert.alert(${pokemon.number})">
            <span class="number">#${pokemon.number}</span>
            <span class="name">${pokemon.name}</span>
       
            <div class="details">
               <ol class="types">
-                 ${pokemon.types
+                ${pokemon.types
                 .map((type) => `<li class="type ${type}">${type}</li>`)
                 .join('')}
               </ol>
@@ -23,10 +23,10 @@ let offset = 0;
               <img src="${pokemon.photo}" alt="${pokemon.name}">
            </div>
         </li>
-        
-      `;
-    }
+    `;
+}
 
+// Função para adicionar mais pokémon na lista
 function loadPokemonItens(offset, limit) {
     pokeApi.getPokemonLista(offset, limit).then((pokemonLista = []) => {
         const newHtml = pokemonLista.map(convertPokemonToLi).join(' ')
@@ -36,6 +36,7 @@ function loadPokemonItens(offset, limit) {
 
 loadPokemonItens(offset, limit)
 
+// Funcionalidade do botão
 loadMoreButton.addEventListener('click', () => {
     offset += limit
     const qtdRecordsWithNexPage = offset + limit

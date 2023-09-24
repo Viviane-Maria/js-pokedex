@@ -38,7 +38,7 @@
 
 .pokemon-img {
     width: 12rem;
-    z-index: 999999;
+    z-index: 99999;
 }
 
 .content-details {
@@ -56,7 +56,7 @@
     margin: 1.5rem 0;
 }
 
-.title-3 {
+.stats-base {
     font-size: 0.95rem;
     color: #6b6b6b;
 }
